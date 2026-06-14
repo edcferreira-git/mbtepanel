@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>GIF Dinâmico</title>
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+
+    // Força o navegador a baixar o TXT sem cache
+    const urlTXT = "dataqui.txt?t=" + Date.now();
+
+    fetch(urlTXT)
+        .then(r => r.text())
+        .then(texto => {
+            const limpo = texto.trim();
+            const segundo = new Date().getSeconds();
+let inicio = 100;
+
+// 00–09
+if (segundo >= 0 && segundo <= 9) {
+    inicio = 100;
+}
+
+// 10–19
+else if (segundo >= 10 && segundo <= 19) {
+    inicio = (4*43)+100;   // 8
+}
+
+// 20–29
+else if (segundo >= 20 && segundo <= 29) {
+    inicio = (4*43)+(4*43)+100;   // 12
+}
+
+// 30–39
+else if (segundo >= 30 && segundo <= 39) {
+    inicio = (4*43)+(4*43)+(4*43)+100;  // 16
+}
+
+// 40–49
+else if (segundo >= 40 && segundo <= 49) {
+    inicio = (4*43)+(4*43)+(4*43)+(4*43)+100;  // 20
+}
+
+// 50–59
+else if (segundo >= 50 && segundo <= 59) {
+    inicio = (4*43)+(4*43)+(4*43)+(4*43)+(4*43)+100;  // 24
+}
+
+const nome = limpo.substring(inicio, inicio + 4);
+
+
+            
+            // Força o navegador a baixar o GIF sem cache
+            const gif = nome + ".gif?t=" + Date.now();
+
+            const img = document.createElement("img");
+            img.src = gif;
+            document.body.appendChild(img);
+        })
+        .catch(err => {
+            console.error("Erro ao carregar dataqui.txt:", err);
+        });
+
+</script>
+
+</body>
+</html>
